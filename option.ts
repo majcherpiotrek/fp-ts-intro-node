@@ -15,9 +15,6 @@ const getCtheOldWay = (data: Data) => {
   return c;
 };
 
-const getOptionC = (data: Data): O.Option<string> =>
-  O.fromNullable(data?.a?.b?.c);
-
 /*
 This doesn't realle make things much easier yet, but we're being more explicit with the return type. The true power of Option comes out when we use map and flatMap! But first let's have a look at pipes.
 */
@@ -62,17 +59,3 @@ export const processCWithValidationOldWay = (data: Data) => {
     }
   }
 };
-
-const processCWithValidation1 = flow(
-  (data: Data) => O.fromNullable(data?.a?.b?.c),
-  O.map(processStringWithFlow),
-  O.chain(({ result }) => (result.length <= 10 ? O.some({ result }) : O.none))
-);
-
-// However the code inside chain looks ugly, how can we improve that?
-
-export const processCWithValidation = flow(
-  (data: Data) => O.fromNullable(data?.a?.b?.c),
-  O.map(processStringWithFlow),
-  O.chain(O.fromPredicate(({ result }) => result.length <= 10))
-);
