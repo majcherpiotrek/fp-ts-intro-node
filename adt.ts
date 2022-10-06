@@ -14,6 +14,12 @@ interface LoadingStateNoADT<T, E> {
   error?: E;
 }
 
+const state: LoadingStateNoADT<string, string> = {
+  status: 'Loading',
+  data: 'data',
+  error: 'error',
+};
+
 /*
 Without ADT we allow illegal states at the type level.
 It requires implicit domain knowledge to know which states don't make sense. The validation must take place imperatively
